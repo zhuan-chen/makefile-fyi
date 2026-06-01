@@ -42,9 +42,7 @@ describes. Keep process detail in issues or pull requests.
 
 ### Style
 
-Use prose by default. Use bullets only when the body genuinely enumerates
-parallel items and each item stands on its own. Don't use bullets to chop
-narrative prose into fragments.
+Follow `docs/conventions/lists.md` for prose versus bullets.
 
 Follow `docs/conventions/inline-code.md` for backticks.
 

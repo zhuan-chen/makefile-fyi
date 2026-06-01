@@ -14,12 +14,14 @@ would overflow. Wrapping earlier, when the next word still fits, is wrong.
 
 ## Code
 
-Rely on language-specific formatters or linters to handle wrapping. Quoted
-strings are the usual exception: they stay unbroken even when they push the line
-past the limit.
+Rely on language-specific formatters or linters to handle wrapping.
 
 ## Exceptions
 
 - `LICENSE` keeps the format of its standard upstream version.
+
 - Commit messages use narrower line limits; see
   `docs/conventions/commit-message.md`.
+
+- A URL, a string literal, or any other token with no break point can't be
+  wrapped, so its line may exceed the limit.

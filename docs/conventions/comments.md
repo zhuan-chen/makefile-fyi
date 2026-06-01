@@ -1,5 +1,13 @@
 # Comments
 
+A comment is prose carried on lines that begin with a comment marker. Treat the
+marker as including the leading syntax and its usual following space. In Make,
+that means `#` plus one space. The text-formatting conventions here apply to
+comment text unchanged, with two adjustments:
+
+- Measure margins from after the marker.
+- Write a blank line as a bare comment line (an empty line would end the block).
+
 ## Placement
 
 Attach a comment directly to the code it describes, with no blank line or bare
@@ -57,14 +65,13 @@ citation is easy to spot when scanning:
 # See: https://example.org/single-link
 ```
 
-For multiple references on the same concept, switch to a bulleted list. Use `-`
-as the bullet character: it is unambiguously a list marker, while `*` can read
-as a wildcard or emphasis depending on the renderer.
+For multiple references on the same concept, switch to a bulleted list. Follow
+`docs/conventions/lists.md` for the bullet character.
 
 ```make
 # Explanation citing multiple sources.
 #
 # See:
-#   - https://example.org/first
-#   - https://example.org/second
+# - https://example.org/first
+# - https://example.org/second
 ```
