@@ -1,4 +1,4 @@
-# Lists
+# List
 
 ## When to use a list
 

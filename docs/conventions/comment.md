@@ -1,12 +1,17 @@
-# Comments
+# Comment
 
 A comment is prose carried on lines that begin with a comment marker. Treat the
-marker as including the leading syntax and its usual following space. In Make,
-that means `#` plus one space. The text-formatting conventions here apply to
-comment text unchanged, with two adjustments:
+marker as the comment syntax plus its usual following space; for a line comment
+that starts with `#`, that is `#` and one space.
 
-- Measure margins from after the marker.
-- Write a blank line as a bare comment line (an empty line would end the block).
+The text-formatting conventions apply to comment text, with two adjustments:
+
+- Measure indentation and alignment from after the marker, not from column zero,
+  so a nested list or wrapped line sits relative to the comment text.
+
+- Write a blank line as a bare comment line; an empty line would end the block.
+
+The line-length limit still counts the whole line, marker included.
 
 ## Placement
 
@@ -66,7 +71,7 @@ citation is easy to spot when scanning:
 ```
 
 For multiple references on the same concept, switch to a bulleted list. Follow
-`docs/conventions/lists.md` for the bullet character.
+`docs/conventions/list.md` for the bullet character.
 
 ```make
 # Explanation citing multiple sources.

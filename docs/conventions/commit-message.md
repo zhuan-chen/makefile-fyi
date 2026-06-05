@@ -42,7 +42,7 @@ describes. Keep process detail in issues or pull requests.
 
 ### Style
 
-Follow `docs/conventions/lists.md` for prose versus bullets.
+Follow `docs/conventions/list.md` for prose versus bullets.
 
 Follow `docs/conventions/inline-code.md` for backticks.
 
