@@ -1,31 +1,12 @@
 # shellcheck shell=sh
 
-# Shared helpers for the per-tool install scripts in `toolchain/tools/`.
+# Shared helpers for `toolchain/tools/install-*.sh`.
 #
-# The split is deliberate. A tool script says what to install: the version, the
-# per-platform asset and checksum, the download URL, and the placement step
-# (install_bin). This library handles where and how: it resolves the install
-# prefix, creates a staging area with cleanup traps on the first fetch, and
-# provides the host selection, fetch, verify, unpack, and install helpers. A
-# tool script names no paths or environment variables of its own, so adding a
-# tool is mostly declaring what to fetch.
-#
-# Contract: a tool script in `toolchain/tools/` sources this from its `lib/`
-# subdirectory, locating the file by its own path:
+# Tool scripts source this helper through their own path:
 #   # shellcheck disable=SC1091
 #   . "$(dirname "$0")/lib/install.sh"
-#
-# The ShellCheck directive is for the analyzer, not the shell. Tool scripts
-# suppress the "not following" message for this computed source path because the
-# shared helper is checked directly as its own shell script.
-#
-# The path is `$(dirname "$0")` (self-reference), not an environment variable:
-# the library sits at a fixed path relative to the tool script, so the script
-# finds it by its own location. `$0` is set by the shell at invocation and works
-# from any directory.
 
-# Stop on the first failed command and on any unset variable. These apply to the
-# sourcing tool script too, which is what we want.
+# These options also govern the tool script that sources this library.
 set -eu
 
 # Install prefix: the tree whose `bin/` goes on the caller's PATH.
@@ -35,9 +16,8 @@ set -eu
 # it elsewhere, e.g. `TOOLCHAIN_INSTALL_PREFIX=/tmp/x` for tests that must not
 # touch the real tree.
 #
-# The `${NAME:?MSG}` expansion uses NAME when set and non-empty; otherwise it
-# prints MSG and exits. So a bare `./toolchain/tools/<tool>.sh` without an
-# install destination dies before it can write anywhere.
+# A bare `./toolchain/tools/<tool>.sh` with no install destination dies here,
+# before it can write anywhere.
 _install_prefix="${TOOLCHAIN_INSTALL_PREFIX:?set TOOLCHAIN_INSTALL_PREFIX}"
 
 # die MESSAGE...: report an error on stderr and stop.
@@ -127,7 +107,7 @@ fetch_and_verify() {
 		trap 'exit 130' INT TERM HUP
 	fi
 
-	# curl flags (shell can't annotate them inline mid-command):
+	# curl flags:
 	# --fail: HTTP 4xx/5xx becomes a non-zero exit, not a saved error page.
 	# --location: follow redirects (GitHub releases redirect to a CDN).
 	# --retry 3, --retry-delay 1: retry transient errors, 1s apart.
