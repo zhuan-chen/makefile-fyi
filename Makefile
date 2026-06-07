@@ -1,15 +1,20 @@
-# GNU Make's "default goal" is the first target it encounters while parsing. If
-# a user runs `make` with no arguments, the default goal is what gets built. By
-# defining `all` here, before any `include`, we guarantee `all` is the default
-# no matter what targets the included files happen to declare first.
+# This file is named `Makefile` (capital M) by convention. When you run `make`,
+# GNU Make searches for a makefile by trying these names in order:
+# `GNUmakefile`, `makefile`, then `Makefile`. Both lowercase `makefile` and
+# capital `Makefile` work, but `Makefile` is recommended (and by far the most
+# common): in an ASCII listing, uppercase sorts before lowercase, so it appears
+# near the top of a directory listing, next to README, LICENSE, and friends.
+# `GNUmakefile` is reserved for makefiles that only work with GNU Make.
 #
-# See: https://www.gnu.org/software/make/manual/html_node/Goals.html
-#
-# `.PHONY` marks `all` as a non-file target. Without it, if a file named `all`
-# ever appeared in the directory, Make would compare its timestamp against the
-# rule's prerequisites and skip the rule when the file looked up-to-date.
-# `.PHONY` tells Make: this name never refers to a file, always run the rule.
-#
-# See: https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
-.PHONY: all
-all:
+# See: https://www.gnu.org/software/make/manual/html_node/Makefile-Names.html
+
+# The absolute directory of the makefile currently being read. See the full
+# rationale in `make/docs/conventions/path-anchor.md`.
+self_dir = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+
+# This Makefile's own directory, pinned before any include.
+root_dir := $(self_dir)
+
+include $(root_dir)/make/special-targets.mk
+include $(root_dir)/make/special-variables.mk
+include $(root_dir)/make/all.mk
