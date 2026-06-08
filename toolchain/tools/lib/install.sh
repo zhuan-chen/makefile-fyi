@@ -11,9 +11,9 @@ set -eu
 
 # Install prefix: the tree whose `bin/` goes on the caller's PATH.
 #
-# The destination is supplied by `TOOLCHAIN_INSTALL_PREFIX`. Make can compute
-# and pass the repo-local default, while tests or direct invocations can point
-# it elsewhere, e.g. `TOOLCHAIN_INSTALL_PREFIX=/tmp/x` for tests that must not
+# The destination is supplied by TOOLCHAIN_INSTALL_PREFIX. Make can compute and
+# pass the repo-local default, while tests or direct invocations can point it
+# elsewhere, e.g. `TOOLCHAIN_INSTALL_PREFIX=/tmp/x` for tests that must not
 # touch the real tree.
 #
 # A bare `./toolchain/tools/<tool>.sh` with no install destination dies here,
@@ -38,11 +38,10 @@ die() {
 # matching logic. A match prints `ARCHIVE|SHA256`, leaving the caller to split
 # and assign those names explicitly.
 #
-# The helper reads each line with `IFS= read -r`. `IFS` is the shell's Internal
+# The helper reads each line with `IFS= read -r`. IFS is the shell's Internal
 # Field Separator; `read` uses it to split fields and trim leading or trailing
-# separators. Setting it to empty for this command preserves the line as
-# written, and `-r` keeps backslashes literal. The uppercase name is the
-# standard shell variable name, like `PATH` and `HOME`.
+# separators. Setting IFS to empty for this command preserves the line as
+# written, and `-r` keeps backslashes literal.
 #
 # The loop reads one HOST line, then consumes the next two lines as ARCHIVE and
 # SHA256. Empty HOST lines are skipped. If a record starts but either following
@@ -98,8 +97,8 @@ fetch_and_verify() {
 	# Create the staging dir and arm cleanup on the first fetch; the guard
 	# makes a later fetch a no-op. Deferred from source time so a tool that
 	# dies on an unsupported platform touches nothing. It lives inside the
-	# install prefix (same filesystem as its bin/) so install_bin can place
-	# a tool by rename.
+	# install prefix (same filesystem as its `bin/`) so install_bin can
+	# place a tool by rename.
 	if [ -z "${_install_staging:-}" ]; then
 		mkdir -p "$_install_prefix"
 		_install_staging=$(mktemp -d "$_install_prefix/.staging.XXXXXX")
@@ -133,10 +132,11 @@ fetch_and_verify() {
 	# binary mode. The canonical text-mode line therefore shows two spaces:
 	# a field separator and the mode marker.
 	#
-	# `sha256sum -c -` reads those check lines from stdin (-) and verifies
-	# them (-c): it hashes the named file and compares. A match prints
-	# "<file>: OK" and exits 0; a mismatch prints "<file>: FAILED" and
-	# exits non-zero, so the `|| die` aborts the install.
+	# `sha256sum -c -` reads those check lines from stdin (`-`) and verifies
+	# them in check mode (`-c`): it hashes the named file and compares. A
+	# match prints "<file>: OK" and exits 0; a mismatch prints
+	# "<file>: FAILED" and exits non-zero, so the `|| die` aborts the
+	# install.
 	(cd "$_install_staging" &&
 		printf '%s  %s\n' "$_install_sha" "$_install_file" |
 		sha256sum -c -) ||
@@ -144,7 +144,7 @@ fetch_and_verify() {
 }
 
 # unpack FILENAME: extract a staged archive in place. The format follows the
-# extension: .tar.xz, .tar.gz, and .zip are supported.
+# filename suffix; supported suffixes are .tar.xz, .tar.gz, and .zip.
 unpack() {
 	# Needs the staging dir from fetch_and_verify; fail clearly if absent.
 	[ -n "${_install_staging:-}" ] ||
@@ -159,9 +159,9 @@ unpack() {
 }
 
 # install_bin SRC NAME: place one executable on PATH. SRC is the binary's path
-# within the staging area; it lands at $_install_prefix/bin/NAME through an
+# within the staging area; it lands at `$_install_prefix/bin/NAME` through an
 # atomic rename from that same-filesystem staging area, so PATH never sees a
-# half-written file and a failed or interrupted install leaves nothing in bin/.
+# half-written file; a failed or interrupted install leaves nothing in `bin/`.
 install_bin() {
 	# Needs the staging dir from fetch_and_verify; fail clearly if absent.
 	[ -n "${_install_staging:-}" ] ||

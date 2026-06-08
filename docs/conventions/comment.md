@@ -4,12 +4,9 @@ A comment is prose carried on lines that begin with a comment marker. Treat the
 marker as the comment syntax plus its usual following space; for a line comment
 that starts with `#`, that is `#` and one space.
 
-The text-formatting conventions apply to comment text, with two adjustments:
-
-- Measure indentation and alignment from after the marker, not from column zero,
-  so a nested list or wrapped line sits relative to the comment text.
-
-- Write a blank line as a bare comment line; an empty line would end the block.
+The text-formatting conventions apply to comment text, with indentation and
+alignment measured from after the marker, not from column zero, so a nested list
+or wrapped line sits relative to the comment text.
 
 The line-length limit still counts the whole line, marker included.
 
@@ -38,13 +35,29 @@ SHELL := /bin/sh
 ## Paragraphs
 
 When a comment block spans multiple paragraphs, separate them with a bare
-comment line:
+comment line, since an empty line would end the block:
 
 ```make
 # First paragraph of the explanation.
 #
 # Second paragraph of the explanation.
 next_thing := something
+```
+
+## Preformatted examples
+
+For code, tables, command output, and other preformatted text inside a comment,
+use indentation after the marker rather than Markdown fences. Fences are useful
+in Markdown, but in a raw comment they are literal lines and make the example
+harder to scan.
+
+Indent each preformatted line two spaces from the comment text margin. Preserve
+any additional indentation inside the example after those two spaces.
+
+```sh
+# Tool scripts source this helper through their own path:
+#   # shellcheck disable=SC1091
+#   . "$(dirname "$0")/lib/install.sh"
 ```
 
 ## References
