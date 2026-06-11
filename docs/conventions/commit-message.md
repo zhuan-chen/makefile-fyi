@@ -49,9 +49,9 @@ Follow `docs/conventions/backtick.md` for backticks.
 ### Related commits
 
 Reference related commits by 7-character short hash when that is unambiguous in
-this repo (`Follows 1fa6fd6`, `Built on 1fa6fd6`). For load-bearing references
+this repo (`Follows 1a2b3c4`, `Built on 1a2b3c4`). For load-bearing references
 like a revert, include the subject in quotes:
-`Reverses "Gather Markdown files together" (1fa6fd6)`.
+`Reverses "rename build output" (1a2b3c4)`.
 
 ## Trailers
 
@@ -64,4 +64,4 @@ columns.
 
 - `Fixes: #123` closes an issue on merge.
 - `Refs: #456` references an issue without closing it.
-- `Reverts: 1fa6fd6` reverts a prior commit.
+- `Reverts: 1a2b3c4` reverts a prior commit.

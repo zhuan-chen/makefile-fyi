@@ -8,8 +8,8 @@ collapses it. Indent that continuation with spaces, aligned under the first item
 on the line above, so the items read as one per line.
 
 ```make
-$(root_dir)/.local/bin/%: $(here)/tools/install-%.sh \
-                        | $(root_dir)/.local/bin
-	TOOLCHAIN_INSTALL_PREFIX='$(root_dir)/.local' $<
-	@test -x "$@"
+$(dest_dir)/%.txt: $(src_dir)/%.txt \
+                 | $(dest_dir)
+	cp "$<" "$@"
+	@test -s "$@"
 ```

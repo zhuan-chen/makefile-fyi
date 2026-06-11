@@ -6,12 +6,12 @@ same way everywhere.
 
 Send error messages to stderr and exit non-zero, so a failure is both visible to
 a person and detectable by a caller. Centralize the prefix and exit in a small
-helper; the installer library's `die` is one example:
+helper:
 
 ```sh
 # die MESSAGE...: report an error on stderr and stop.
 die() {
-	printf 'install: %s\n' "$*" >&2
+	printf 'app: %s\n' "$*" >&2
 	exit 1
 }
 ```

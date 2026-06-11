@@ -20,12 +20,12 @@ token needs backticks only when one of these is true:
 
 - It could be read as ordinary English: `make`, `all`, `include`. Tokens whose
   shape already marks them as technical stay bare: command names like `printf`,
-  snake_case names like `root_dir`, camelCase names like `abcXyz`, PascalCase
-  names like `AbcXyz`, and all-caps names like `PATH`.
+  snake_case names like `foo_bar`, camelCase names like `fooBar`, PascalCase
+  names like `FooBar`, and all-caps names like `PATH`.
 
 - The token uses punctuation or operator characters whose exact spelling or
-  boundary matters: `$(...)`, `-r`, `||`, `ARCHIVE|SHA256`. Filename suffixes
-  stay bare when they are clear in context: `.tar.xz`, `.tar.gz`, `.zip`.
+  boundary matters: `$(...)`, `-r`, `||`, `KEY|VALUE`. Filename suffixes stay
+  bare when they are clear in context: `.tar.xz`, `.tar.gz`, `.zip`.
 
 - It is a multi-word command, where the backticks bound the whole statement,
   spaces and all, so it reads as one unit and is not split across a line break:

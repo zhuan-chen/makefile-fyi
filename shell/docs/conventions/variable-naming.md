@@ -10,7 +10,7 @@ that are already uppercase.
 
 POSIX `sh` has no `local`, so functions and sourced files share one variable
 namespace with their caller. In a sourced helper, give every private variable a
-helper-specific underscore prefix, such as `_install_`.
+helper-specific underscore prefix, such as `_foo_`.
 
 Use that prefix for function arguments, scratch values, and shared helper state
 alike. Plain lowercase names are the shared vocabulary between a script and the

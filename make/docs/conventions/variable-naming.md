@@ -6,7 +6,7 @@ Case is not decoration; it tells the reader who is expected to set the variable.
 
 Use lowercase for variables that serve an internal purpose in the makefile:
 values the makefile computes for its own use and nobody sets from outside.
-`root_dir` is one such variable.
+`build_dir` is one such variable.
 
 Use uppercase for parameters a user is meant to override on the command line,
 such as `CC`, `CFLAGS`, or `PREFIX`. Uppercase signals that `make CC=clang` is a
@@ -21,7 +21,7 @@ See: https://www.gnu.org/software/make/manual/html_node/Using-Variables.html
 
 ## Word separator
 
-Join words with underscores, as in `root_dir`. The underscore is the only
+Join words with underscores, as in `build_dir`. The underscore is the only
 separator to use; whether the letters are lowercase or uppercase follows the
 rules above.
 

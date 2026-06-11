@@ -58,7 +58,7 @@ makefile's own directory with `:=` before it includes anything:
 ```make
 root_dir := $(self_dir)
 
-include $(root_dir)/make/all.mk
+include $(root_dir)/rules.mk
 ```
 
 If a makefile waits until after an `include`, `self_dir` resolves to the
@@ -95,13 +95,13 @@ A relative path in an `include` resolves against Make's working directory, not
 the directory of the makefile that wrote it. The same goes for paths in recipes
 and in `$(wildcard ...)`. The working directory is not fixed: `make -C`, a
 sub-make, or a plain `make` started from another directory each move it. So a
-bare relative `include make/all.mk` finds the file only when you start from the
+bare relative `include rules.mk` finds the file only when you start from the
 repo root.
 
 Prefixing the path with the captured anchor removes that dependence:
 
 ```make
-include $(root_dir)/make/all.mk
+include $(root_dir)/rules.mk
 ```
 
 `$(root_dir)` is absolute, so the include resolves to the same file wherever

@@ -8,8 +8,8 @@ shell-specific comment patterns.
 For reusable functions, introduce the function with a compact signature comment:
 
 ```sh
-# install_bin SRC NAME: place one executable on PATH.
-install_bin() {
+# parse_config FILE: read settings from FILE.
+parse_config() {
 ```
 
 Use uppercase placeholders in the signature comment for positional parameters.

@@ -55,9 +55,9 @@ Indent each preformatted line two spaces from the comment text margin. Preserve
 any additional indentation inside the example after those two spaces.
 
 ```sh
-# Tool scripts source this helper through their own path:
-#   # shellcheck disable=SC1091
-#   . "$(dirname "$0")/lib/install.sh"
+# Usage:
+#   ./run.sh --check
+#   ./run.sh --fix
 ```
 
 ## References

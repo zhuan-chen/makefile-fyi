@@ -5,7 +5,7 @@ configuration variable:
 
 ```sh
 # shellcheck disable=SC1091
-. "$(dirname "$0")/lib/install.sh"
+. "$(dirname "$0")/lib/common.sh"
 ```
 
 `$0` is the running script's own path, set by the shell at invocation, so

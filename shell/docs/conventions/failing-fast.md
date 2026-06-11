@@ -10,5 +10,5 @@ and exits, so a missing input fails at once rather than expanding to an empty
 string:
 
 ```sh
-_install_prefix="${TOOLCHAIN_INSTALL_PREFIX:?set TOOLCHAIN_INSTALL_PREFIX}"
+config_path="${APP_CONFIG:?set APP_CONFIG}"
 ```
