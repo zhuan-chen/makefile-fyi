@@ -51,7 +51,7 @@ die() {
 #   selected_asset=$(
 #       select_host_asset tool-name <<EOF
 #   Linux x86_64
-#   tool-v${version}.linux.x86_64.tar.xz
+#   tool-v$version.linux.x86_64.tar.xz
 #   8c3be...
 #   EOF
 #   )
