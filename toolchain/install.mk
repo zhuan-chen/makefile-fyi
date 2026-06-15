@@ -1,22 +1,24 @@
-# Install developer tools into the repo on demand.
+# Install tools into the repo on demand.
 
 here := $(self_dir)
 
-$(root_dir)/.local/bin:
-	@mkdir -p $@
-
-# Each tool has a tools/install-<tool>.sh script that downloads, verifies, and
-# places one executable at $(root_dir)/.local/bin/<tool>.
+# Each tool is defined by tools/<tool>.sh and installed by the install.sh
+# driver, which downloads, verifies, and places one executable at
+# $(root_dir)/.local/bin/<tool>.
 #
-# The script is the only normal prerequisite. Version and checksum changes live
-# in that file, so a script edit reinstalls the tool.
-#
-# The $(root_dir)/.local/bin directory is an order-only prerequisite: it only
-# has to exist, and making it a normal prerequisite would reinstall every tool
-# whenever a new install adds a file and bumps the directory's timestamp.
+# The tool definition is the only prerequisite: a version or checksum change in
+# that file reinstalls the tool. install.sh is deliberately not a prerequisite,
+# so a shared driver edit does not reinstall every tool.
 #
 # The executable is the target, so deleting it is enough to force a reinstall.
-$(root_dir)/.local/bin/%: $(here)/tools/install-%.sh \
-                        | $(root_dir)/.local/bin
-	TOOLCHAIN_INSTALL_PREFIX='$(root_dir)/.local' $<
+# Unpacking preserves the archive's mtime (the upstream build date), which
+# predates the tool definition, so the recipe touches the placed file. Without
+# that, Make would see the target as older than its prerequisite and reinstall
+# on every run.
+#
+# In this pattern rule, $* is the stem matched by %, so it is the tool name. The
+# recipe runs `install.sh <tool>`.
+$(root_dir)/.local/bin/%: $(here)/tools/%.sh
+	TOOLCHAIN_INSTALL_PREFIX='$(root_dir)/.local' $(here)/install.sh $*
 	@test -x "$@"
+	@touch "$@"
