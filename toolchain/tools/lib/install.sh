@@ -1,6 +1,6 @@
 # shellcheck shell=sh
 
-# Shared helpers for `toolchain/tools/install-*.sh`.
+# Shared helpers for toolchain/tools/install-*.sh.
 #
 # Tool scripts source this helper through their own path:
 #   # shellcheck disable=SC1091
@@ -9,14 +9,14 @@
 # These options also govern the tool script that sources this library.
 set -eu
 
-# Install prefix: the tree whose `bin/` goes on the caller's PATH.
+# Install prefix: the tree whose bin/ goes on the caller's PATH.
 #
 # The destination is supplied by TOOLCHAIN_INSTALL_PREFIX. Make can compute and
 # pass the repo-local default, while tests or direct invocations can point it
-# elsewhere, e.g. `TOOLCHAIN_INSTALL_PREFIX=/tmp/x` for tests that must not
+# elsewhere, e.g. TOOLCHAIN_INSTALL_PREFIX=/tmp/x for tests that must not
 # touch the real tree.
 #
-# A bare `./toolchain/tools/<tool>.sh` with no install destination dies here,
+# A bare ./toolchain/tools/<tool>.sh with no install destination dies here,
 # before it can write anywhere.
 _install_prefix="${TOOLCHAIN_INSTALL_PREFIX:?set TOOLCHAIN_INSTALL_PREFIX}"
 
@@ -35,13 +35,13 @@ die() {
 #
 # POSIX sh has no arrays, so the here-doc table keeps the per-tool host data in
 # the tool script while this helper owns the repeated host detection and
-# matching logic. A match prints `ARCHIVE|SHA256`, leaving the caller to split
+# matching logic. A match prints ARCHIVE|SHA256, leaving the caller to split
 # and assign those names explicitly.
 #
 # The helper reads each line with `IFS= read -r`. IFS is the shell's Internal
 # Field Separator; `read` uses it to split fields and trim leading or trailing
 # separators. Setting IFS to empty for this command preserves the line as
-# written, and `-r` keeps backslashes literal.
+# written, and -r keeps backslashes literal.
 #
 # The loop reads one HOST line, then consumes the next two lines as ARCHIVE and
 # SHA256. Empty HOST lines are skipped. If a record starts but either following
@@ -59,9 +59,9 @@ die() {
 #   sha256=${selected_asset#*|}
 #
 # The final two lines are POSIX parameter expansion. The first removes the
-# longest suffix that starts with `|`, leaving the archive before the separator.
-# The second removes the shortest prefix that ends with `|`, leaving the sha256
-# after the separator. In those shell patterns, `*` is the wildcard and `|` is a
+# longest suffix that starts with |, leaving the archive before the separator.
+# The second removes the shortest prefix that ends with |, leaving the sha256
+# after the separator. In those shell patterns, * is the wildcard and | is a
 # literal separator.
 select_host_asset() {
 	[ "$#" -eq 1 ] || die "select_host_asset: expected TOOL"
@@ -97,7 +97,7 @@ fetch_and_verify() {
 	# Create the staging dir and arm cleanup on the first fetch; the guard
 	# makes a later fetch a no-op. Deferred from source time so a tool that
 	# dies on an unsupported platform touches nothing. It lives inside the
-	# install prefix (same filesystem as its `bin/`) so install_bin can
+	# install prefix (same filesystem as its bin/) so install_bin can
 	# place a tool by rename.
 	if [ -z "${_install_staging:-}" ]; then
 		mkdir -p "$_install_prefix"
@@ -128,14 +128,14 @@ fetch_and_verify() {
 	# printf writes one line in the format sha256sum expects,
 	# "<hash><space><mode><filename>", for example:
 	#   8c3be...198  shellcheck-v0.11.0.linux.x86_64.tar.xz
-	# The mode character is a space for text mode (the default) or `*` for
+	# The mode character is a space for text mode (the default) or * for
 	# binary mode. The canonical text-mode line therefore shows two spaces:
 	# a field separator and the mode marker.
 	#
-	# `sha256sum -c -` reads those check lines from stdin (`-`) and verifies
-	# them in check mode (`-c`): it hashes the named file and compares. A
+	# `sha256sum -c -` reads those check lines from stdin (-) and verifies
+	# them in check mode (-c): it hashes the named file and compares. A
 	# match prints "<file>: OK" and exits 0; a mismatch prints
-	# "<file>: FAILED" and exits non-zero, so the `|| die` aborts the
+	# "<file>: FAILED" and exits non-zero, so the || die guard aborts the
 	# install.
 	(cd "$_install_staging" &&
 		printf '%s  %s\n' "$_install_sha" "$_install_file" |
@@ -159,9 +159,9 @@ unpack() {
 }
 
 # install_bin SRC NAME: place one executable on PATH. SRC is the binary's path
-# within the staging area; it lands at `$_install_prefix/bin/NAME` through an
+# within the staging area; it lands at $_install_prefix/bin/NAME through an
 # atomic rename from that same-filesystem staging area, so PATH never sees a
-# half-written file; a failed or interrupted install leaves nothing in `bin/`.
+# half-written file; a failed or interrupted install leaves nothing in bin/.
 install_bin() {
 	# Needs the staging dir from fetch_and_verify; fail clearly if absent.
 	[ -n "${_install_staging:-}" ] ||

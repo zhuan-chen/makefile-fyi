@@ -5,11 +5,11 @@
 #   make enter ENTER_PROMPT_NAME=custom
 #   make enter ENTER_SHELL="$SHELL"
 #
-# Default parameter values use `?=` so a module included before enter.mk, or a
+# Default parameter values use ?= so a module included before enter.mk, or a
 # value on the command line, can override them.
 
 # The prompt name identifies this environment. The recipe prefixes it to the
-# inherited PS1. With `ENTER_PROMPT_NAME=foo` and a current prompt of `$`, the
+# inherited PS1. With ENTER_PROMPT_NAME=foo and a current prompt of $, the
 # entered shell gets:
 #   (foo) $
 #
@@ -17,8 +17,8 @@
 # no trailing slash, so notdir keeps its final path component.
 ENTER_PROMPT_NAME ?= $(notdir $(root_dir))
 
-# Default to `/bin/sh` because interactive shells often reset inherited PS1 from
-# their startup files. For example, Bash commonly reads `~/.bashrc` for
+# Default to /bin/sh because interactive shells often reset inherited PS1 from
+# their startup files. For example, Bash commonly reads ~/.bashrc for
 # interactive sessions, and that file often assigns PS1 again. If that happens,
 # it overwrites the prompt label from Make.
 ENTER_SHELL ?= /bin/sh
@@ -30,12 +30,12 @@ ENTER_SHELL ?= /bin/sh
 # caller's parent shell is unchanged, and exiting the child shell returns to it.
 #
 # Keep repo-local tools first in PATH. PATH is searched left to right, so the
-# recipe prepends `.local/bin` unless it is already the first entry. The check
+# recipe prepends .local/bin unless it is already the first entry. The check
 # only looks at the first entry; an existing later copy can remain because the
 # leading copy is what sets precedence.
 #
-# `${name:+word}` expands to word only when name is set and non-empty. Here,
-# word is `:$PATH`, which avoids creating a trailing colon when PATH is unset or
+# ${name:+word} expands to word only when name is set and non-empty. Here,
+# word is :$PATH, which avoids creating a trailing colon when PATH is unset or
 # empty. In PATH, a trailing, leading, or doubled colon creates an empty field,
 # meaning the current directory. This target does not sanitize an already
 # malformed caller PATH, but it should not introduce a new empty field.

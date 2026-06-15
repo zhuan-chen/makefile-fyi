@@ -15,21 +15,34 @@ conventionally does.
 ## Comments
 
 Backticks are literal characters in a comment, not rendered formatting, so use
-them only where bare text would be misread or hard to parse. In a comment, a
-token needs backticks only when one of these is true:
+them only where bare text would be misread or hard to parse. The examples here
+use backticks because this file is Markdown. When this section says a token
+stays bare, omit those backticks in the comment.
 
-- It could be read as ordinary English: `make`, `all`, `include`. Tokens whose
-  shape already marks them as technical stay bare: command names like `printf`,
-  snake_case names like `foo_bar`, camelCase names like `fooBar`, PascalCase
-  names like `FooBar`, and all-caps names like `PATH`.
+In a comment, use backticks only in these cases:
 
-- The token uses punctuation or operator characters whose exact spelling or
-  boundary matters: `$(...)`, `-r`, `||`, `KEY|VALUE`. Filename suffixes stay
-  bare when they are clear in context: `.tar.xz`, `.tar.gz`, `.zip`.
+- A token could be read as ordinary English: `make`, `all`, `include`, `read`.
 
-- It is a multi-word command, where the backticks bound the whole statement,
-  spaces and all, so it reads as one unit and is not split across a line break:
-  `IFS= read -r`, `sha256sum -c -`.
+- A multi-word command needs to stay bound as one statement, spaces and all, so
+  it reads as one unit and is not split across a line break: `IFS= read -r`,
+  `sha256sum -c -`.
+
+Otherwise the token already reads as technical, so leave it bare:
+
+- Command names whose spelling is not ordinary English: `printf`.
+
+- Paths and filenames in their ordinary form: `file.txt`, `.tar.gz`, `src/abc`,
+  `/usr/local/bin`. Slashes and dots are expected file syntax and read clearly.
+
+- Punctuation, set apart by its symbols: `$(...)`, `-r`, `||`.
+
+- Placeholders, marked as slots by their brackets: `<name>`, `foo_<bar>`.
+
+- Identifier case styles: `snake_case`, `camelCase`, `PascalCase`.
+
+- Underscore-marked identifiers: `_foo`, `foo_`, `_foo_`, `__foo__`.
+
+- All-caps names: `PATH`.
 
 For multi-line examples inside comments, follow the `Preformatted examples`
 section in `docs/conventions/comment.md` rather than Markdown fences.

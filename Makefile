@@ -9,7 +9,7 @@
 # See: https://www.gnu.org/software/make/manual/html_node/Makefile-Names.html
 
 # The absolute directory of the makefile currently being read. See the full
-# rationale in `make/docs/conventions/path-anchor.md`.
+# rationale in make/docs/conventions/path-anchor.md.
 self_dir = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 # This Makefile's own directory, pinned before any `include`.
@@ -30,6 +30,6 @@ include $(root_dir)/make/all.mk
 # Make reads all included makefiles before it runs any recipe, so global export
 # directives from any module are visible to `enter` regardless of include order.
 # Keep enter.mk last anyway for clarity. This also allows other modules to shape
-# enter.mk's environment by overriding `ENTER_*` defaults before enter.mk's `?=`
+# enter.mk's environment by overriding ENTER_* defaults before enter.mk's ?=
 # assignments.
 include $(root_dir)/make/enter.mk
