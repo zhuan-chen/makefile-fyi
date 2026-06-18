@@ -3,22 +3,23 @@
 here := $(self_dir)
 
 # Each tool is defined by tools/<tool>.sh and installed by the install.sh
-# driver, which downloads, verifies, and places one executable at
-# $(root_dir)/.local/bin/<tool>.
+# driver, which downloads, verifies, and installs one pinned version, keeping
+# earlier versions in place.
 #
 # The tool definition is the only prerequisite: a version or checksum change in
-# that file reinstalls the tool. install.sh is deliberately not a prerequisite,
+# that file reruns the installer. install.sh is deliberately not a prerequisite,
 # so a shared driver edit does not reinstall every tool.
 #
-# The executable is the target, so deleting it is enough to force a reinstall.
-# Unpacking preserves the archive's mtime (the upstream build date), which
-# predates the tool definition, so the recipe touches the placed file. Without
-# that, Make would see the target as older than its prerequisite and reinstall
-# on every run.
+# The target is the active release symlink under lib/, keyed by tool name.
+# Deleting the symlink forces a rerun, which relinks the installed release and
+# re-exposes its commands; deleting the installed release too forces a full
+# reinstall.
 #
 # In this pattern rule, $* is the stem matched by %, so it is the tool name. The
-# recipe runs `install.sh <tool>`.
-$(root_dir)/.local/bin/%: $(here)/tools/%.sh
+# recipe runs `install.sh <tool>`, then touches the release directory through
+# the symlink. Make follows the symlink to that directory and reads its
+# timestamp; reactivating an installed release keeps an old timestamp there, so
+# without the touch Make would rerun the recipe every time.
+$(root_dir)/.local/lib/%: $(here)/tools/%.sh
 	TOOLCHAIN_INSTALL_PREFIX='$(root_dir)/.local' $(here)/install.sh $*
-	@test -x "$@"
-	@touch "$@"
+	touch "$@"
