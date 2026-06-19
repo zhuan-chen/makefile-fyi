@@ -31,3 +31,8 @@ not unstage it; leave any later generated edits to that change unstaged.
 
 Do not commit. I may ask for help drafting a commit message, but I run
 `git commit` myself.
+
+## Code review
+
+When I say `code-review.md` as a request, that means a request for a code review
+based on `docs/conventions/code-review.md`.
