@@ -5,15 +5,15 @@ reference.
 
 ## Stance
 
-This repo is my personal Makefile setup. Consider it one person's take, not a
-recommended starter.
+This repository is my personal makefile setup. Consider it one person's take,
+not a recommended starter.
 
 Comments throughout explain the underlying GNU Make concepts and design choices,
 so a reader can pick up the patterns alongside the rationale.
 
 ## Contributions
 
-Makefile setups are highly project-specific. Feel free to fork for your own use.
+A makefile setup is highly project-specific. Feel free to fork for your own use.
 PRs aren't accepted, but issues for errata or questions are welcome.
 
 ## License

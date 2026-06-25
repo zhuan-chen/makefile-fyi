@@ -10,10 +10,10 @@ Use the `<subsystem>: <description>` form, with a 50-character maximum including
 the prefix and no trailing period.
 
 `<subsystem>` is the code area touched and keeps `git log` skimmable by area.
-Use the directory path relative to the repo root, with `/` for nesting. Pick the
-most specific path that captures the change. For repo-wide changes, omit the
-`<subsystem>` prefix and use only `<description>`. There is no fixed scope list;
-the tree is the source of truth.
+Use the directory path relative to the repository root, with `/` for nesting.
+Pick the most specific path that captures the change. For repository-wide
+changes, omit the `<subsystem>` prefix and use only `<description>`. There is no
+fixed scope list; the tree is the source of truth.
 
 `<description>` names the change in imperative mood. It starts with a lowercase
 imperative verb ("use X", not "Use X" or "used X") unless a proper noun, path,
@@ -49,8 +49,8 @@ Follow `docs/conventions/backtick.md` for backticks.
 ### Related commits
 
 Reference related commits by 7-character short hash when that is unambiguous in
-this repo (`Follows 1a2b3c4`, `Built on 1a2b3c4`). For load-bearing references
-like a revert, include the subject in quotes:
+this repository (`Follows 1a2b3c4`, `Built on 1a2b3c4`). For load-bearing
+references like a revert, include the subject in quotes:
 `Reverses "rename build output" (1a2b3c4)`.
 
 ## Trailers

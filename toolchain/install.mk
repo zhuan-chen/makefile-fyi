@@ -1,4 +1,4 @@
-# Install tools into the repo on demand.
+# Install tools into this repository on demand.
 
 here := $(self_dir)
 

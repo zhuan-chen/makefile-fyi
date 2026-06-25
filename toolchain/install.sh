@@ -441,8 +441,8 @@ main() {
 	[ -f "$_install_definition" ] ||
 		_install_die "no tool definition: $install_tool"
 
-	# Install prefix: the directory tools install under. Make passes a
-	# repo-local default; tests or direct runs can point it elsewhere, e.g.
+	# Install prefix: the directory tools install under. Make passes the
+	# repository default; tests or direct runs can point it elsewhere, e.g.
 	# TOOLCHAIN_INSTALL_PREFIX=/tmp/x. Required with no default, so a run
 	# with no destination dies before any phase can write.
 	#

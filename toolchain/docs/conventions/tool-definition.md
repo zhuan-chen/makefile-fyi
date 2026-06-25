@@ -14,8 +14,8 @@ what to install.
 ## Location
 
 Put one tool definition at `tools/<tool>.sh`, where `<tool>` is the tool name
-passed to `install.sh <tool>` and, under this repo's Make wiring, selected by
-the `.local/lib/<tool>` active release symlink.
+passed to `install.sh <tool>` and, under this repository's Make wiring, selected
+by the `.local/lib/<tool>` active release symlink.
 
 Tool names are filename stems, not paths. Use lowercase letters, digits,
 underscores, and hyphens only.

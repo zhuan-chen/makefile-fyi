@@ -13,8 +13,8 @@
 # entered shell gets:
 #   (foo) $
 #
-# The default is this repo's directory name. root_dir is an absolute path with
-# no trailing slash, so notdir keeps its final path component.
+# The default is this repository's directory name. root_dir is an absolute path
+# with no trailing slash, so notdir keeps its final path component.
 ENTER_PROMPT_NAME ?= $(notdir $(root_dir))
 
 # Default to /bin/sh because interactive shells often reset inherited PS1 from
@@ -29,8 +29,8 @@ ENTER_SHELL ?= /bin/sh
 # variables stay after entry; unexported Make variables stay Make-only. The
 # caller's parent shell is unchanged, and exiting the child shell returns to it.
 #
-# Keep repo-local tools first in PATH. PATH is searched left to right, so the
-# recipe prepends .local/bin unless it is already the first entry. The check
+# Keep this repository's tools first in PATH. PATH is searched left to right, so
+# the recipe prepends .local/bin unless it is already the first entry. The check
 # only looks at the first entry; an existing later copy can remain because the
 # leading copy is what sets precedence.
 #

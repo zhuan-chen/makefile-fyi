@@ -2,9 +2,9 @@
 
 Anchor paths to the makefile being read, not the working directory. Every
 makefile here needs its own directory as a stable anchor for sibling files
-(includes, scripts, data): the top Makefile wants the repo root, an included
-module wants its own location. This one macro serves them all as a recursive
-variable:
+(includes, scripts, data): the top Makefile wants the repository root, an
+included module wants its own location. This one macro serves them all as a
+recursive variable:
 
 ```make
 self_dir = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
@@ -69,9 +69,8 @@ included file and yields the wrong directory.
 Name each captured path for its role.
 
 Use `root_dir` for the top-level makefile because it names the repository root
-and is shared across the whole Make setup, including included `.mk` files. Use
-it for repo-relative paths so every include, script, and data reference starts
-from the same anchor.
+and is shared across all included makefiles. Use it for repository-relative
+paths so every include, script, and data reference starts from the same anchor.
 
 Use `here` in an included module when that module needs its own directory for
 sibling files.
@@ -96,7 +95,7 @@ the directory of the makefile that wrote it. The same goes for paths in recipes
 and in `$(wildcard ...)`. The working directory is not fixed: `make -C`, a
 sub-make, or a plain `make` started from another directory each move it. So a
 bare relative `include rules.mk` finds the file only when you start from the
-repo root.
+repository root.
 
 Prefixing the path with the captured anchor removes that dependence:
 

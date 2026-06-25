@@ -33,7 +33,7 @@ change against it; otherwise rely on judgment.
 
 - Simplicity: Take the shape as given and find the simplest code and text that
   still works. Cut needless moving parts and indirection, remove duplication,
-  and reuse what the repo already has over adding a new mechanism.
+  and reuse what the repository already has over adding a new mechanism.
 
 - Cohesion: Check whether the staged diff is one coherent change or should be
   split into separate commits.

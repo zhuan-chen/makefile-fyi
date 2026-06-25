@@ -1,6 +1,6 @@
 # Agents
 
-Instructions for AI coding agents working in this repo and in downstream
+Instructions for AI coding agents working in this repository and in downstream
 projects that rely on it.
 
 ## Conventions
