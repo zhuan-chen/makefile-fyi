@@ -21,6 +21,21 @@ unit:
 next_thing := something
 ```
 
+When a comment describes several code blocks, place it before the group and end
+it with a blank line. The blank line keeps the group comment from visually
+attaching to the first code block; each block can still have its own attached
+comment:
+
+```make
+# Directories used by build outputs.
+
+# Intermediate build artifacts.
+build_dir := build
+
+# Release archives.
+dist_dir := dist
+```
+
 File-level comments are different: they apply to the whole file rather than the
 first code block. Place them at the very top, with a single blank line
 separating them from the rest, so they do not visually bind to whatever appears
