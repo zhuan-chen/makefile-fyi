@@ -29,7 +29,7 @@ Make permits other styles, but the two common ones each cause real trouble:
 
 - Hyphens. Make accepts `-` in a name, and `$(some-dir)` does expand, but the
   name does not survive cleanly as a shell variable. A POSIX shell variable name
-  does not allow hyphens, so a child shell cannot read `$some-dir` back as one
+  does not allow hyphens, so shell code cannot read `$some-dir` back as one
   variable.
 
 - camelCase. `someDir` is legal and works, but it is unidiomatic in Make, whose
