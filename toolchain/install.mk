@@ -1,6 +1,6 @@
 # Install tools into this repository on demand.
 
-here := $(self_dir)
+toolchain_dir := $(self_dir)
 
 # Each tool is defined by tools/<tool>.sh and installed by the install.sh
 # driver, which downloads, verifies, and installs one pinned version, keeping
@@ -20,6 +20,7 @@ here := $(self_dir)
 # the symlink. Make follows the symlink to that directory and reads its
 # timestamp; reactivating an installed release keeps an old timestamp there, so
 # without the touch Make would rerun the recipe every time.
-$(root_dir)/.local/lib/%: $(here)/tools/%.sh
-	TOOLCHAIN_INSTALL_PREFIX='$(root_dir)/.local' $(here)/install.sh $*
+$(root_dir)/.local/lib/%: $(toolchain_dir)/tools/%.sh
+	TOOLCHAIN_INSTALL_PREFIX='$(root_dir)/.local' \
+		$(toolchain_dir)/install.sh $*
 	touch "$@"

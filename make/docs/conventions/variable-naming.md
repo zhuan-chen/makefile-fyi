@@ -35,3 +35,16 @@ Make permits other styles, but the two common ones each cause real trouble:
 - camelCase. `someDir` is legal and works, but it is unidiomatic in Make, whose
   names conventionally use underscores. Following the convention keeps them
   predictable.
+
+## Scope
+
+Make has no module-local variable scope. Treat every variable as visible to
+every later makefile and recipe expansion. A nested include can reassign a name
+before the including makefile continues; because recipes expand after parsing, a
+later assignment can also change what an earlier recipe sees.
+
+When one included makefile or feature owns a variable, encode that owner in the
+name. Use a shared name only for values that are intentionally part of the
+global contract, such as `self_dir` and `root_dir`. Otherwise prefix the role
+with the owning module or feature, such as `toolchain_dir` for the `toolchain/`
+module. Avoid generic local names such as `here`.

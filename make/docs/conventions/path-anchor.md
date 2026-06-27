@@ -64,16 +64,18 @@ include $(root_dir)/rules.mk
 If a makefile waits until after an `include`, `self_dir` resolves to the
 included file and yields the wrong directory.
 
-## Name captured paths
+## Name anchors
 
-Name each captured path for its role.
+After a makefile captures `self_dir` with `:=`, the result is its path anchor.
+Name each anchor for the role it serves.
 
 Use `root_dir` for the top-level makefile because it names the repository root
 and is shared across all included makefiles. Use it for repository-relative
 paths so every include, script, and data reference starts from the same anchor.
 
-Use `here` in an included module when that module needs its own directory for
-sibling files.
+Name an included module's anchor after its path component, such as
+`toolchain_dir` for `toolchain/`. The name identifies the owning module,
+following the scope rule in `make/docs/conventions/variable-naming.md`.
 
 ## Keep `self_dir` in the top Makefile
 
