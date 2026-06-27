@@ -44,7 +44,8 @@ describes. Keep process detail in issues or pull requests.
 
 Follow `docs/conventions/list.md` for prose versus bullets.
 
-Follow `docs/conventions/backtick.md` for backticks.
+For backticks, follow the raw-text rule in `docs/conventions/backtick.md`, not
+the rendered Markdown rule.
 
 ### Related commits
 
