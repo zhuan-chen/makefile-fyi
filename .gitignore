@@ -1,2 +1,5 @@
 # Tools installed into this repository.
 /.local/
+
+# Keep the root CLAUDE.md local; create it on demand as an AGENTS.md symlink.
+/CLAUDE.md

@@ -18,6 +18,15 @@ ENTER_SHELL ?= $${SHELL:-/bin/sh}
 # caller's parent shell is unchanged, and exiting the entered shell returns to
 # it.
 #
+# MAKEFILES points Make at this setup's top Makefile, so a `make` started in the
+# entered shell reads this setup no matter which directory it runs from.
+#
+# See: https://www.gnu.org/software/make/manual/make.html#MAKEFILES-Variable
+#
+# Make exports MAKEFLAGS, MAKELEVEL, and MFLAGS to recipes. Unset them before
+# entry so later `make` commands started by the entered shell do not inherit
+# this target's recursive-make state, options, or jobserver flags.
+#
 # Keep this repository's tools first in PATH. PATH is searched left to right, so
 # the recipe prepends .local/bin unless it is already the first entry. The check
 # only looks at the first entry; an existing later copy can remain because the
@@ -29,9 +38,6 @@ ENTER_SHELL ?= $${SHELL:-/bin/sh}
 # meaning the current directory. This target does not sanitize an already
 # malformed caller PATH, but it should not introduce a new empty field.
 #
-# PATH could be assigned in Make, but the entered shell is its only consumer, so
-# keeping the assignment in the recipe limits its scope.
-#
 # The final exec replaces Make's recipe shell with the entered shell, which
 # removes a dormant wrapper shell:
 #   make -> recipe sh -> entered shell  (without exec)
@@ -42,9 +48,11 @@ ENTER_SHELL ?= $${SHELL:-/bin/sh}
 # mask that status. With exec, later commands are unreachable unless exec itself
 # fails.
 enter:
-	@case ":$${PATH-}:" in \
+	@unset MAKEFLAGS MAKELEVEL MFLAGS; \
+	case ":$${PATH-}:" in \
 		:"$(root_dir)/.local/bin":*) ;; \
 		*) PATH="$(root_dir)/.local/bin$${PATH:+:$$PATH}" ;; \
 	esac; \
 	export PATH; \
+	MAKEFILES="$(root_dir)/Makefile" \
 	exec "$(ENTER_SHELL)" -i

@@ -8,6 +8,19 @@
 #
 # See: https://www.gnu.org/software/make/manual/html_node/Makefile-Names.html
 
+# Duplicate-read guard. The entered shell (make/enter.mk) exports MAKEFILES
+# pointing here, so this file can be read twice: once via MAKEFILES and once
+# from normal Makefile discovery or an explicit `make -f <file>`. Without the
+# guard, the second pass would warn about overriding every recipe.
+#
+# Normalize MAKEFILE_LIST entries before counting because the same makefile can
+# be read through different path spellings, such as absolute, relative, or
+# symlinked names.
+root_makefiles := $(foreach makefile,$(MAKEFILE_LIST),$(realpath $(makefile)))
+root_makefile := $(lastword $(root_makefiles))
+root_makefile_hits := $(filter $(root_makefile),$(root_makefiles))
+ifeq ($(words $(root_makefile_hits)),1)
+
 # The absolute directory of the makefile currently being read. See the full
 # rationale in make/docs/conventions/path-anchor.md.
 self_dir = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
@@ -15,21 +28,6 @@ self_dir = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 # This Makefile's own directory, pinned before any `include`.
 root_dir := $(self_dir)
 
-# Global behavior for special Make targets and variables.
-#
-# They are order-insensitive in GNU Make, but keeping them before modules makes
-# the policy visible first.
-include $(root_dir)/make/special-targets.mk
-include $(root_dir)/make/special-variables.mk
+include $(root_dir)/make/main.mk
 
-# The `all` aggregate goal, plus the modules that add buildable targets to it.
-include $(root_dir)/make/all.mk
-
-# Interactive shell entry point with Make's exported variables.
-#
-# Make reads all included makefiles before it runs any recipe, so global export
-# directives from any module are visible to `enter` regardless of include order.
-# Keep enter.mk last anyway for clarity. This also allows other modules to shape
-# enter.mk's environment by overriding ENTER_* defaults before enter.mk's ?=
-# assignments.
-include $(root_dir)/make/enter.mk
+endif

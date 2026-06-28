@@ -3,6 +3,10 @@
 Instructions for AI coding agents working in this repository and in downstream
 projects that rely on it.
 
+When this file is accessed through a symlink, resolve the symlink to find the
+repository's real path. Use that path for paths mentioned below and in other
+documents or code comments.
+
 ## Conventions
 
 Conventions are layered: root rules apply everywhere, language rules apply to
@@ -34,5 +38,10 @@ Do not commit. I may ask for help drafting a commit message, but I run
 
 ## Code review
 
-When I say `code-review.md` as a request, that means a request for a code review
-based on `docs/conventions/code-review.md`.
+When I say `code-review.md`, treat it as a request for a code review based on
+`docs/conventions/code-review.md`.
+
+Request forms:
+
+- `code-review.md`: review the current Git repository.
+- `code-review.md: <path>`: review the Git repository at `<path>`.
